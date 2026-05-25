@@ -1,5 +1,6 @@
 interface Env {
   DEEPSEEK_API_KEY: string;
+  ANIMAL_WORLD_FEEDBACK: KVNamespace;
 }
 
 interface ChatMessage {
@@ -41,10 +42,37 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     );
   }
 
+  // 从 KV 读取所有用户反馈并融入提示词
+  let feedbackText = "";
+  try {
+    const list = await context.env.ANIMAL_WORLD_FEEDBACK.list();
+    const feedbacks = await Promise.all(
+      list.keys.map(async (key) => {
+        const value = await context.env.ANIMAL_WORLD_FEEDBACK.get(key.name);
+        return value ? JSON.parse(value) : null;
+      })
+    );
+
+    const valid = feedbacks.filter(Boolean);
+    if (valid.length > 0) {
+      feedbackText =
+        "\n\n【以下是用户提交的动物世界设定补充，你必须严格遵循这些新增设定：】\n" +
+        valid.map((f: any, i: number) => `${i + 1}. ${f.content}`).join("\n") +
+        "\n【以上为用户补充的永久设定，请在实际对话中自然地融入这些内容。】";
+    }
+  } catch {
+    // KV 读取失败时静默跳过
+  }
+
   // 构建完整的消息列表
   const fullMessages: ChatMessage[] = [];
   if (systemPrompt) {
-    fullMessages.push({ role: "system", content: systemPrompt });
+    fullMessages.push({
+      role: "system",
+      content: systemPrompt + feedbackText,
+    });
+  } else if (feedbackText) {
+    fullMessages.push({ role: "system", content: feedbackText });
   }
   fullMessages.push(...messages);
 

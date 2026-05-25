@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Contact } from "@/data/contacts";
 import Sidebar from "@/components/Sidebar";
 import ChatArea from "@/components/ChatArea";
+import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Home() {
   const [activeContact, setActiveContact] = useState<Contact | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-pink-50">
@@ -39,6 +41,21 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {/* 意见反馈浮动按钮 */}
+      <button
+        onClick={() => setShowFeedback(true)}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-sm font-medium text-pink-500 shadow-lg transition-all hover:bg-pink-50 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+        title="意见反馈"
+      >
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+        </svg>
+        意见反馈
+      </button>
+
+      {/* 反馈弹窗 */}
+      <FeedbackModal isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
     </div>
   );
 }

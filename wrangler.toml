@@ -1,0 +1,7 @@
+name = "my-ai-tax-lab"
+pages_build_output_dir = "out"
+compatibility_date = "2025-05-25"
+
+[[kv_namespaces]]
+binding = "ANIMAL_WORLD_FEEDBACK"
+id = "63f0e32acf644662a4dc742fd64e92d5"
