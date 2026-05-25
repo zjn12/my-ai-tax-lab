@@ -5,9 +5,10 @@ import { Contact, contacts } from "@/data/contacts";
 interface Props {
   activeId: string | null;
   onSelect: (contact: Contact) => void;
+  onFeedback: () => void;
 }
 
-export default function Sidebar({ activeId, onSelect }: Props) {
+export default function Sidebar({ activeId, onSelect, onFeedback }: Props) {
   return (
     <div className="flex h-full w-full flex-col bg-gradient-to-b from-pink-50 to-purple-50">
       {/* 顶部标题 */}
@@ -59,8 +60,17 @@ export default function Sidebar({ activeId, onSelect }: Props) {
       </div>
 
       {/* 底部 */}
-      <div className="border-t border-pink-100 px-4 py-3 text-center">
-        <p className="text-[10px] text-pink-300">
+      <div className="border-t border-pink-100 px-4 py-3 space-y-2">
+        <button
+          onClick={onFeedback}
+          className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-white py-2 text-xs font-medium text-pink-400 shadow-sm transition-all hover:bg-pink-50 hover:text-pink-500"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+          </svg>
+          意见反馈
+        </button>
+        <p className="text-center text-[10px] text-pink-300">
           工具制作：浙江同方-审计一部-朱佳楠
         </p>
       </div>

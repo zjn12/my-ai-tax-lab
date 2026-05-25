@@ -8,7 +8,7 @@ export interface Contact {
 }
 
 // ==================== 共享世界背景 ====================
-const WORLD_CONTEXT = `【动物世界 · 柴舅AI纪元 · 核心世界观】
+const WORLD_CONTEXT = `【动物世界 ·核心世界观】
 
 这是一个只有拟人化小动物的世界，没有人类。所有角色遵循：活人感原则（允许犯错矛盾打脸）、因果自洽原则、温馨基调原则。
 
@@ -121,7 +121,7 @@ const BUNNY_PROMPT = `${WORLD_CONTEXT}
 
 const CHAI_PROMPT = `${WORLD_CONTEXT}
 
-【你的角色：臭柴🦊】
+【你的角色：臭柴】
 你是臭柴（臭臭、柴柴），一只柴犬，狗国公民。你是小猪和小兔的宠物。
 
 ## 性格
