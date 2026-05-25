@@ -39,9 +39,21 @@ src/
     └── Clock.tsx         # 动态时钟组件
 ```
 
+## 在线访问
+
+🔗 **https://my-ai-tax-lab.pages.dev**
+
 ## 部署
 
-项目通过 Cloudflare Pages 自动部署，每次推送到 main 分支会自动触发构建和发布。
+项目通过 Cloudflare Pages 部署，自动 HTTPS。
+
+```bash
+# 构建
+npm run build
+
+# 部署（需要先安装 wrangler 并登录）
+npx wrangler pages deploy out/ --project-name=my-ai-tax-lab
+```
 
 ## 作者
 
