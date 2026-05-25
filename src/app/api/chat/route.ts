@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.SILICONFLOW_API_KEY;
+  const apiKey = process.env.DEEPSEEK_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: "请在 .env.local 中设置 SILICONFLOW_API_KEY，或部署到 Cloudflare 后通过环境变量配置" },
+      { error: "请在 .env.local 中设置 DEEPSEEK_API_KEY，或部署到 Cloudflare 后通过环境变量配置" },
       { status: 500 }
     );
   }
@@ -30,14 +30,14 @@ export async function POST(request: NextRequest) {
   fullMessages.push(...messages);
 
   try {
-    const response = await fetch("https://api.siliconflow.cn/v1/chat/completions", {
+    const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "Qwen/Qwen2.5-7B-Instruct",
+        model: "deepseek-v4-flash",
         messages: fullMessages,
         temperature: 0.9,
         max_tokens: 512,

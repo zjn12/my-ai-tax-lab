@@ -1,5 +1,5 @@
 interface Env {
-  SILICONFLOW_API_KEY: string;
+  DEEPSEEK_API_KEY: string;
 }
 
 interface ChatMessage {
@@ -13,11 +13,11 @@ interface ChatRequest {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const apiKey = context.env.SILICONFLOW_API_KEY;
+  const apiKey = context.env.DEEPSEEK_API_KEY;
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: "未配置 API Key，请在 Cloudflare 环境变量中设置 SILICONFLOW_API_KEY" }),
+      JSON.stringify({ error: "未配置 API Key，请在 Cloudflare 环境变量中设置 DEEPSEEK_API_KEY" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
@@ -49,14 +49,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   fullMessages.push(...messages);
 
   try {
-    const response = await fetch("https://api.siliconflow.cn/v1/chat/completions", {
+    const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "Qwen/Qwen2.5-7B-Instruct",
+        model: "deepseek-v4-flash",
         messages: fullMessages,
         temperature: 0.9,
         max_tokens: 512,
